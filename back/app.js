@@ -20,4 +20,8 @@ app.use(express.json());
 
 app.use('/api/products', productRoutes);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to kanapé API !')
+})
+
 module.exports = app;
