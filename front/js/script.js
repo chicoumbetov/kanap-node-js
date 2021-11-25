@@ -3,9 +3,6 @@
 // const urlBackend = 'http://localhost:3000/api/products';
 const urlBackend = 'https://kanap-project.herokuapp.com/api/products';
 
-
-
-
 const getProductsFunction = async () => {
     const response = await fetch(urlBackend)
     // console.log("response", response)
@@ -20,6 +17,7 @@ const showProducts = (products) => {
     const divProduct = document.querySelector('#items');
     products.map((product) => {
         // console.log("product", product)
+        // pass id to URL => href="./product.html?id=${product._id}"
         divProduct.innerHTML += `
             <a href="./product.html?id=${product._id}">
                 <article>

@@ -23,10 +23,12 @@ let emailErrorMsg = document.querySelector('#emailErrorMsg')
 const parsed = JSON.parse(localStorage.getItem('panier'))
 // console.log("sssss", parsed)
 let data;
+let products = []
+let contact;
+
 const deleteProduct = (pro) => {
     console.log("del", pro)
 }
-
 
 const displayPanier = () => {
     parsed.map((added) => {
@@ -71,30 +73,69 @@ const displayPanier = () => {
         sumQuantity.push(item.quantity)
     })
 
+    parsed.map((item) => {
+        products.push(item.id)
+    })
+
     totalPrice.innerHTML = `${sum.reduce((prev, next) => prev+next)}`
     totalQuantity.innerHTML = `${sumQuantity.reduce((prev, next) => prev + next)}`
 }
-
 
 form.addEventListener("submit", function(evt) {
     evt.preventDefault();
     fillArray();
 });
 
+async function orderChosenProduct(e) {
+    // e.preventDefault()
+    console.log("e", e)
+    try {
+        const justCreated = await fetch("https://kanap-project.herokuapp.com/api/products/order", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ contact, products})
+        })
+        const orderedProduct = await justCreated.json()
+        console.log("justCreated:", orderedProduct)
+
+        /** first method by id to localStorage but forbidden by CahiersDesCharges */
+        // localStorage.setItem('orderId', orderedProduct.orderId);
+        localStorage.removeItem('panier');
+
+        /** second method : passing id to URL and switching to next page (window.location... etc) */
+        window.location.href=`./confirmation.html?id=${orderedProduct.orderId}`
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 function fillArray() {
-    console.log("firstNom "+ firstNom.value);
-    console.log("lastName "+ lastName.value);
-    console.log("city "+ city.value);
-    console.log("address"+ address.value);
-    console.log("email "+ email.value);
+    // console.log("firstNom "+ firstNom.value);
+    // console.log("lastName "+ lastName.value);
+    // console.log("address"+ address.value);
+    // console.log("city "+ city.value);
+    // console.log("email "+ email.value);
+    contact = {
+        firstName: firstNom.value,
+        lastName: lastName.value,
+        address: address.value,
+        city: city.value,
+        email: email.value
+    }
+
+    console.log("contact:", contact)
+    console.log("products:", products)
+    orderChosenProduct({contact, products})
 }
 
 
 
 (async function() {
     displayPanier()
-    console.log("eeeee")
-
     // console.log("deleteBtn:", deleteBtn)
 })()
 
