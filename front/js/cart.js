@@ -6,30 +6,19 @@ const panier = document.querySelector('#cart__items');
 const totalPrice = document.querySelector('#totalPrice');
 const totalQuantity = document.querySelector('#totalQuantity');
 
+let firstNom = document.getElementById('firstName')
+let lastName = document.getElementById('lastName')
+let address = document.getElementById('address')
+let city = document.getElementById('city')
+let email = document.getElementById('email')
 
-let firstNom = document.querySelector('#firstName')
-document.querySelector('#firstNameErrorMsg')
+let form = document.getElementById('form')
 
-
-document.querySelector('#lastName')
-document.querySelector('#lastNameErrorMsg')
-
-
-document.querySelector('#address')
-document.querySelector('#addressErrorMsg')
-
-
-document.querySelector('#city')
-document.querySelector('#cityErrorMsg')
-
-
-document.querySelector('#email')
-document.querySelector('#emailErrorMsg')
-
-
-document.querySelector('#order')
-
-
+let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
+let lastNameErrorMsg = document.querySelector('#lastNameErrorMsg')
+let addressErrorMsg = document.querySelector('#addressErrorMsg')
+let cityErrorMsg = document.querySelector('#cityErrorMsg')
+let emailErrorMsg = document.querySelector('#emailErrorMsg')
 
 const parsed = JSON.parse(localStorage.getItem('panier'))
 // console.log("sssss", parsed)
@@ -41,7 +30,7 @@ const deleteProduct = (pro) => {
 
 const displayPanier = () => {
     parsed.map((added) => {
-        console.log('added:', added)
+        // console.log('added:', added)
         data=added
         panier.innerHTML += `
             <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
@@ -69,18 +58,62 @@ const displayPanier = () => {
     `
 
     })
-    console.log("paaaa", parsed)
+    console.log("parsed", parsed)
 
-    totalPrice.innerHTML = `${parsed.price * parsed.quantity}`
-    totalQuantity.innerHTML = `${parsed.quantity}`
+    let sum = []
+    parsed.map((each) => {
+        sum.push(each.price * each.quantity)
+        // console.log("iiiii", each.price * each.quantity)
+    })
+
+    let sumQuantity = []
+    parsed.map((item) => {
+        sumQuantity.push(item.quantity)
+    })
+
+    totalPrice.innerHTML = `${sum.reduce((prev, next) => prev+next)}`
+    totalQuantity.innerHTML = `${sumQuantity.reduce((prev, next) => prev + next)}`
+}
+
+
+form.addEventListener("submit", function(evt) {
+    evt.preventDefault();
+    fillArray();
+});
+
+function fillArray() {
+    console.log("firstNom "+ firstNom.value);
+    console.log("lastName "+ lastName.value);
+    console.log("city "+ city.value);
+    console.log("address"+ address.value);
+    console.log("email "+ email.value);
 }
 
 
 
 (async function() {
     displayPanier()
+    console.log("eeeee")
+
     // console.log("deleteBtn:", deleteBtn)
 })()
 
 
-// console.log("parsed after", parsed)
+
+/**
+ * // onChange:
+ let inputs = ['firstName', 'lastName', 'city', 'address', 'email']
+ let values = []
+
+ for (let i = 0; i < inputs.length; i++) {
+    document.getElementsByName(inputs[i])[0].addEventListener('input', function(event) {
+        console.log("loop",event.target.value)
+        values.push(event.target.value)
+    });
+}
+ const showValues = () => {
+    console.log("values:", values)
+}
+
+ *
+ */
