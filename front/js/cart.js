@@ -1,7 +1,3 @@
-
-document.querySelector('#limitedWidthBlock')
-
-document.querySelector('#cartAndFormContainer');
 const panier = document.querySelector('#cart__items');
 const totalPrice = document.querySelector('#totalPrice');
 const totalQuantity = document.querySelector('#totalQuantity');
@@ -13,6 +9,7 @@ let city = document.getElementById('city')
 let email = document.getElementById('email')
 
 let form = document.getElementById('form')
+
 
 let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
 let lastNameErrorMsg = document.querySelector('#lastNameErrorMsg')
@@ -26,24 +23,22 @@ let data;
 let products = []
 let contact;
 
-const deleteProduct = (pro) => {
-    console.log("del", pro)
-}
-
 const displayPanier = () => {
     parsed.map((added) => {
         // console.log('added:', added)
-        data=added
+        data = added
+
+        // data-id & data-color are used to know which is clicked and changed
         panier.innerHTML += `
-            <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
+            <article class="cart__item" data-id="${added.id}" data-color="${added.color}">
                 <div class="cart__item__img">
-                  <img src="${added.imageUrl}" alt="Photographie d'un canapé">
+                  <img src="${added.imageUrl}" alt="${added.title}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
                     <h2>${added.title}</h2>
                     <p>${added.color}</p>
-                    <p>${added.price},00 €</p>
+                    <p>${added.price * added.quantity},00 €</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -52,7 +47,7 @@ const displayPanier = () => {
                       name="itemQuantity" min="1" max="100" value="${added.quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p class="deleteItem" onclick="deleteProduct(data)">Supprimer</p>
+                      <p id="deleteItem" class="deleteItem" >Supprimer</input>
                     </div>
                   </div>
                 </div>
@@ -61,6 +56,58 @@ const displayPanier = () => {
 
     })
     console.log("parsed", parsed)
+
+    /** Changement de panier quantité et couleur */
+    let inputQuantity = document.getElementsByClassName('itemQuantity')
+    // console.log("input", inputQuantity[0].closest("article").dataset)
+
+    for (let i = 0; i < inputQuantity.length; i++) {
+        inputQuantity[i].addEventListener('input', (event) => {
+            console.log("event", event.target.value)
+
+            let changedQuantityId = inputQuantity[i].closest("article").dataset.id;
+            let changedQuantityColor = inputQuantity[i].closest("article").dataset.color;
+
+            let existing = 0
+            parsed.forEach((pars) => {
+
+                console.log("pars:", pars)
+                if (pars.id === changedQuantityId && pars.color === changedQuantityColor) {
+
+                    // inscrease quantity by chosen quantity
+                    // pars.price = (pars.price/pars.quantity) * parseInt(event.target.value)
+                    pars.quantity = parseInt(event.target.value)
+
+                    existing = 1
+
+                }
+                // push to parsed nouvelle item
+            })
+
+            localStorage.setItem('panier', JSON.stringify(parsed));
+            window.location.reload()
+
+            console.log("rrrr", changedQuantityId, changedQuantityColor)
+
+        })
+    }
+
+    let deleteButton = document.getElementsByClassName('deleteItem')
+
+    for (let i = 0; i < deleteButton.length; i++) {
+        let chosenProductId = deleteButton[i].closest("article").dataset.id;
+        console.log("delete II", chosenProductId)
+
+        deleteButton[i].addEventListener('click', () => {
+            let newParsed = parsed.filter((pars) => pars.id !== chosenProductId)
+            console.log("paaaas:", newParsed)
+            localStorage.setItem('panier', JSON.stringify(newParsed));
+            window.location.reload()
+        })
+    }
+
+
+
 
     let sum = []
     parsed.map((each) => {
@@ -112,6 +159,13 @@ async function orderChosenProduct(e) {
     }
 
 }
+
+
+/**
+inputQuantity.addEventListener('change', (event) => {
+    console.log("quantity:", event)
+})
+ */
 
 function fillArray() {
     // console.log("firstNom "+ firstNom.value);

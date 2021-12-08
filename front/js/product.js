@@ -26,7 +26,6 @@ const productDescription = document.getElementById('description');
 const selectColors = document.getElementById('colors');
 const ajouterBtn =  document.getElementById('addToCart');
 
-
 const getOneProductFunction = async () => {
     // passer id pour savoir quel produit est récupé
     const res = await fetch(urlProduct +  productId)
@@ -82,17 +81,17 @@ const showProductFunction = (data) => {
     productImage.innerHTML = `
         <img src="${data.imageUrl}" alt="${data.imageUrl}">
         `
-    productTitle.innerHTML = data.name
-    productPrice.innerHTML = data.price
-    productDescription.innerHTML = data.description
+            productTitle.innerHTML = data.name
+            productPrice.innerHTML = data.price
+            productDescription.innerHTML = data.description
 
-    data.colors.map((color) => {
-        // console.log("color:", color)
-        selectColors.innerHTML += `
-                    <option value="${color}">${color}</option>
-                `
-        // document.querySelector('#color-select').innerHTML
-    })
+            data.colors.map((color) => {
+                // console.log("color:", color)
+                selectColors.innerHTML += `
+                            <option value="${color}">${color}</option>
+                        `
+                // document.querySelector('#color-select').innerHTML
+            })
 
     ajouterBtn.addEventListener("click" , (event) => {
         event.preventDefault()
