@@ -38,7 +38,7 @@ const displayPanier = () => {
                   <div class="cart__item__content__description">
                     <h2>${added.title}</h2>
                     <p>${added.color}</p>
-                    <p>${added.price * added.quantity},00 €</p>
+                    <p>${added.price},00 €</p>
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -47,7 +47,7 @@ const displayPanier = () => {
                       name="itemQuantity" min="1" max="100" value="${added.quantity}">
                     </div>
                     <div class="cart__item__content__settings__delete">
-                      <p id="deleteItem" class="deleteItem" >Supprimer</input>
+                      <p class="deleteItem" >Supprimer</input>
                     </div>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ const displayPanier = () => {
 
     for (let i = 0; i < inputQuantity.length; i++) {
         inputQuantity[i].addEventListener('input', (event) => {
-            console.log("event", event.target.value)
+            // console.log("event", event.target.value)
 
             let changedQuantityId = inputQuantity[i].closest("article").dataset.id;
             let changedQuantityColor = inputQuantity[i].closest("article").dataset.color;
@@ -71,11 +71,11 @@ const displayPanier = () => {
             let existing = 0
             parsed.forEach((pars) => {
 
-                console.log("pars:", pars)
+                // console.log("pars:", pars)
                 if (pars.id === changedQuantityId && pars.color === changedQuantityColor) {
 
                     // inscrease quantity by chosen quantity
-                    // pars.price = (pars.price/pars.quantity) * parseInt(event.target.value)
+                    pars.price = (pars.price/pars.quantity) * parseInt(event.target.value)
                     pars.quantity = parseInt(event.target.value)
 
                     existing = 1
@@ -87,7 +87,7 @@ const displayPanier = () => {
             localStorage.setItem('panier', JSON.stringify(parsed));
             window.location.reload()
 
-            console.log("rrrr", changedQuantityId, changedQuantityColor)
+            // console.log("rrrr", changedQuantityId, changedQuantityColor)
 
         })
     }
@@ -97,13 +97,23 @@ const displayPanier = () => {
     for (let i = 0; i < deleteButton.length; i++) {
         let chosenProductId = deleteButton[i].closest("article").dataset.id;
         console.log("delete II", chosenProductId)
+        console.log("deeeee", deleteButton);
 
-        deleteButton[i].addEventListener('click', () => {
-            let newParsed = parsed.filter((pars) => pars.id !== chosenProductId)
-            console.log("paaaas:", newParsed)
-            localStorage.setItem('panier', JSON.stringify(newParsed));
-            window.location.reload()
-        })
+            deleteButton[i].addEventListener('click', () => {
+                console.log("iiii",i)
+
+                if (deleteButton.length > 1) {
+                    let newParsed = parsed.splice((i-1), 1)
+                    console.log("paaaas:", newParsed)
+                    localStorage.setItem('panier', JSON.stringify(newParsed));
+                } else {
+                    localStorage.removeItem('panier');
+                }
+
+                window.location.reload()
+            })
+
+
     }
 
 
@@ -111,8 +121,8 @@ const displayPanier = () => {
 
     let sum = []
     parsed.map((each) => {
-        sum.push(each.price * each.quantity)
-        // console.log("iiiii", each.price * each.quantity)
+        sum.push(each.price)
+        console.log("iiiii", each.price)
     })
 
     let sumQuantity = []
@@ -124,8 +134,11 @@ const displayPanier = () => {
         products.push(item.id)
     })
 
+    console.log("lllll", sum, sumQuantity)
+
+    console.log("toooo", parsed)
     totalPrice.innerHTML = `${sum.reduce((prev, next) => prev+next)}`
-    totalQuantity.innerHTML = `${sumQuantity.reduce((prev, next) => prev + next)}`
+    totalQuantity.innerHTML =  `${sumQuantity.reduce((prev, next) => prev + next)}`
 }
 
 form.addEventListener("submit", function(evt) {
@@ -193,22 +206,3 @@ function fillArray() {
     // console.log("deleteBtn:", deleteBtn)
 })()
 
-
-
-/**
- * // onChange:
- let inputs = ['firstName', 'lastName', 'city', 'address', 'email']
- let values = []
-
- for (let i = 0; i < inputs.length; i++) {
-    document.getElementsByName(inputs[i])[0].addEventListener('input', function(event) {
-        console.log("loop",event.target.value)
-        values.push(event.target.value)
-    });
-}
- const showValues = () => {
-    console.log("values:", values)
-}
-
- *
- */

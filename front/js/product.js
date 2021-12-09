@@ -131,7 +131,11 @@ const showProductFunction = (data) => {
             }
                 // push to parsed nouvelle item
         })
-        if (existing === 0) panier.push(articleChoisi)
+
+        if (existing === 0) {
+            articleChoisi.price = articleChoisi.price * a;
+            panier.push(articleChoisi)
+        }
 
         localStorage.setItem('panier', JSON.stringify(panier));
 
