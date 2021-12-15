@@ -10,7 +10,6 @@ let email = document.getElementById('email')
 
 let form = document.getElementById('form')
 
-
 let firstNameErrorMsg = document.querySelector('#firstNameErrorMsg')
 let lastNameErrorMsg = document.querySelector('#lastNameErrorMsg')
 let addressErrorMsg = document.querySelector('#addressErrorMsg')
@@ -143,7 +142,16 @@ const displayPanier = () => {
 
 form.addEventListener("submit", function(evt) {
     evt.preventDefault();
-    fillArray();
+
+    const errorMessage = errorManagement()
+
+    if (errorMessage) {
+        // fillArray();
+        console.log("eeeee", errorMessage)
+    } else {
+        console.log("Email error:", errorMessage)
+
+    }
 });
 
 async function orderChosenProduct(e) {
@@ -173,13 +181,6 @@ async function orderChosenProduct(e) {
 
 }
 
-
-/**
-inputQuantity.addEventListener('change', (event) => {
-    console.log("quantity:", event)
-})
- */
-
 function fillArray() {
     // console.log("firstNom "+ firstNom.value);
     // console.log("lastName "+ lastName.value);
@@ -199,7 +200,18 @@ function fillArray() {
     orderChosenProduct({contact, products})
 }
 
+function errorManagement() {
 
+    let valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value);
+    console.log("aaaaaa:", email.value);
+    if(valid) {
+        return true;
+    } else {
+        emailErrorMsg.innerHTML = `Email should contain '@' sign. Please enter a valid email address.`;
+        return false;
+    }
+
+}
 
 (async function() {
     displayPanier()

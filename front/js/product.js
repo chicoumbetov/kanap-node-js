@@ -90,7 +90,6 @@ const showProductFunction = (data) => {
                 selectColors.innerHTML += `
                             <option value="${color}">${color}</option>
                         `
-                // document.querySelector('#color-select').innerHTML
             })
 
     ajouterBtn.addEventListener("click" , (event) => {
@@ -98,7 +97,7 @@ const showProductFunction = (data) => {
         const a = parseInt(document.getElementById("quantity").value)
         const b = document.getElementById("colors").value
 
-        console.log(data._id)
+        // console.log(data._id)
 
         const articleChoisi = {
             id: data._id,
@@ -122,14 +121,12 @@ const showProductFunction = (data) => {
             console.log("pars:", pars)
             if (pars.id === articleChoisi.id && pars.color === articleChoisi.color) {
 
-                // inscrease quantity by chosen quantity
                 pars.quantity += a
                 pars.price += articleChoisi.price * a
 
                 existing = 1
 
             }
-                // push to parsed nouvelle item
         })
 
         if (existing === 0) {
@@ -143,14 +140,6 @@ const showProductFunction = (data) => {
         console.log("articleChoisi", articleChoisi)
 
         // window.location.href="cart.html"
-        /** console.log("event", event)
-        console.log("a", a)
-        console.log("b", b)
-        console.log("c", productTitle.innerHTML)
-        console.log("d", productPrice.innerHTML)
-        console.log("e", productDescription.innerHTML)
-         */
-        // alert('clicked')
     })
 }
 
