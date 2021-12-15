@@ -202,6 +202,26 @@ function fillArray() {
 
 function errorManagement() {
 
+    if (firstNom.value.length < 2 || firstNom.value.length > 50 ) {
+        firstNameErrorMsg.innerHTML = `Name has to have more than 2 characters or less than 30 characters`
+        return false
+    }
+
+    if (lastName.value.length < 2 || lastName.value.length > 50 ) {
+        lastNameErrorMsg.innerHTML = `Last name has to have more than 2 characters or less than 30 characters`
+        return false
+    }
+
+    if (city.value.length < 2 || city.value.length > 60 ) {
+        cityErrorMsg.innerHTML = `City has to have more than 2 characters or less than 30 characters`
+        return false
+    }
+
+    if (address.value.length < 2 || address.value.length > 200 ) {
+        addressErrorMsg.innerHTML = `Address has to have more than 2 characters or less than 200 characters`
+        return false
+    }
+
     let valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value);
     console.log("aaaaaa:", email.value);
     if(valid) {

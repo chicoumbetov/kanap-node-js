@@ -1,7 +1,7 @@
 
 
-// const urlBackend = 'http://localhost:3000/api/products';
-const urlBackend = 'https://kanap-project.herokuapp.com/api/products';
+const urlBackend = 'http://localhost:3000/api/products';
+// const urlBackend = 'https://kanap-project.herokuapp.com/api/products';
 
 const getProductsFunction = async () => {
     const response = await fetch(urlBackend)
