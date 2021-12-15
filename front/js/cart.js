@@ -94,12 +94,12 @@ const displayPanier = () => {
     let deleteButton = document.getElementsByClassName('deleteItem')
 
     for (let i = 0; i < deleteButton.length; i++) {
-        let chosenProductId = deleteButton[i].closest("article").dataset.id;
-        console.log("delete II", chosenProductId)
-        console.log("deeeee", deleteButton);
+        // let chosenProductId = deleteButton[i].closest("article").dataset.id;
+        // console.log("delete II", chosenProductId)
+        // console.log("deeeee", deleteButton);
 
             deleteButton[i].addEventListener('click', () => {
-                console.log("iiii",i)
+                // console.log("iiii",i)
 
                 if (deleteButton.length > 1) {
                     let newParsed = parsed.splice((i-1), 1)
@@ -114,9 +114,6 @@ const displayPanier = () => {
 
 
     }
-
-
-
 
     let sum = []
     parsed.map((each) => {
@@ -133,9 +130,9 @@ const displayPanier = () => {
         products.push(item.id)
     })
 
-    console.log("lllll", sum, sumQuantity)
+    // console.log("lllll", sum, sumQuantity)
 
-    console.log("toooo", parsed)
+    // console.log("parsed", parsed)
     totalPrice.innerHTML = `${sum.reduce((prev, next) => prev+next)}`
     totalQuantity.innerHTML =  `${sumQuantity.reduce((prev, next) => prev + next)}`
 }
@@ -146,8 +143,8 @@ form.addEventListener("submit", function(evt) {
     const errorMessage = errorManagement()
 
     if (errorMessage) {
-        // fillArray();
-        console.log("eeeee", errorMessage)
+        fillArray();
+        console.log("error message", errorMessage)
     } else {
         console.log("Email error:", errorMessage)
 
@@ -203,31 +200,31 @@ function fillArray() {
 function errorManagement() {
 
     if (firstNom.value.length < 2 || firstNom.value.length > 50 ) {
-        firstNameErrorMsg.innerHTML = `Name has to have more than 2 characters or less than 30 characters`
+        firstNameErrorMsg.innerHTML = `Le prénom doit être composée de plus de 2 caractères ou de moins de 50 caractères.`
         return false
     }
 
     if (lastName.value.length < 2 || lastName.value.length > 50 ) {
-        lastNameErrorMsg.innerHTML = `Last name has to have more than 2 characters or less than 30 characters`
+        lastNameErrorMsg.innerHTML = `Le nom doit être composée de plus de 2 caractères ou de moins de 50 caractères.`
         return false
     }
 
     if (city.value.length < 2 || city.value.length > 60 ) {
-        cityErrorMsg.innerHTML = `City has to have more than 2 characters or less than 30 characters`
+        cityErrorMsg.innerHTML = `La ville doit être composée de plus de 2 caractères ou de moins de 60 caractères.`
         return false
     }
 
     if (address.value.length < 2 || address.value.length > 200 ) {
-        addressErrorMsg.innerHTML = `Address has to have more than 2 characters or less than 200 characters`
+        addressErrorMsg.innerHTML = `L'address doit être composée de plus de 2 caractères ou de moins de 200 caractères.`
         return false
     }
 
-    let valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value);
-    console.log("aaaaaa:", email.value);
+    let valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value);
+    console.log("email:", email.value);
     if(valid) {
         return true;
     } else {
-        emailErrorMsg.innerHTML = `Email should contain '@' sign. Please enter a valid email address.`;
+        emailErrorMsg.innerHTML = `Entrez l'email valid, s'il vous plait.`;
         return false;
     }
 
