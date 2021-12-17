@@ -3,7 +3,7 @@ const products = [
     "colors": ["Blue", "White", "Black"],
     "_id": "107fb5b75607497b96722bda5b504926",
     "name": "Kanap Sinopé",
-    "price": 1000,// 1849,
+    "price": 1849,
     "imageUrl": "kanap01.jpeg",
     "description": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "altTxt": "Photo d'un canapé bleu, deux places"

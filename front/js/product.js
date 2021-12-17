@@ -1,5 +1,3 @@
-// get url
-
 let url = new URL(document.location);
 // get params
 let search_params = url.searchParams;
@@ -14,8 +12,6 @@ let productId = search_params.get('id')
 // appeler la route pour afficher un seul produit
 // const urlProduct = 'http://localhost:3000/api/products/'
 const urlProduct = 'https://kanap-project.herokuapp.com/api/products/'
-
-
 
 const productImage = document.querySelector('.item__img');
 
@@ -96,7 +92,6 @@ const showProductFunction = (data) => {
         event.preventDefault()
         const a = parseInt(document.getElementById("quantity").value)
         const b = document.getElementById("colors").value
-
         // console.log(data._id)
 
         const articleChoisi = {
