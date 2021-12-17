@@ -17,7 +17,7 @@ const showProducts = (products) => {
         // console.log("product", product)
         // pass id to URL => href="./product.html?id=${product._id}"
         divProduct.innerHTML += `
-            <a href="./product.html?id=${product._id}">
+            <a href="./front/product.html?id=${product._id}">
                 <article>
                   <img src="${product.imageUrl}" alt="${product.imageUrl}">
                   <h3 class="productName">${product.name}</h3>
